@@ -1,7 +1,7 @@
 import { assertEquals } from "@std/assert";
 import { createApp } from "./main.ts";
 
-Deno.test("App", async (t) => {
+Deno.test({ name: "App", permissions: { net: true } }, async (t) => {
   const fakeWeatherService = {
     temperature: 0,
     getWeather: () => {
@@ -52,4 +52,5 @@ In our code, if this fake object is passed in, it will be used instead of the re
 
 This allows us to test the app's behavior without needing to rely on the actual weather service, which is useful for unit testing and ensuring that our app behaves correctly under different conditions.
 
+You'll need to run this test with the `--allow-net` flag to allow network access, as it creates a server and makes HTTP requests.
 */

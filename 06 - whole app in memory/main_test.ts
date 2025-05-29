@@ -1,14 +1,14 @@
 import { assertEquals } from "@std/assert";
 import { app } from "./main.ts";
 
-Deno.test("App", async (t) => {
+Deno.test({ name: "App", permissions: { net: true } }, async (t) => {
   const server = Deno.serve({ port: 0 }, app.fetch);
   const root = `http://localhost:${server.addr.port}`;
 
   await t.step("GET /", async () => {
     const response = await fetch(`${root}/`);
     const text = await response.text();
-    
+
     assertEquals(response.status, 200);
     assertEquals(text, "Hello, World!");
   });
@@ -49,5 +49,7 @@ This example shows how you can use the web framework Hono in memory, combined wi
 We're using test steps here to create our web server, make requests, and check responses.
 
 This approach allows you to test your app's endpoints, responses, and overall behavior without needing to deploy it or run it in a separate process.
+
+You'll need to run this test with the `--allow-net` flag to allow network access, as it creates a server and makes HTTP requests.
 
 */
